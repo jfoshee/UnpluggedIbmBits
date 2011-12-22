@@ -87,6 +87,7 @@ namespace Unplugged.IbmBits.Tests
             }
         }
 
+        // TODO: Move AssertBytesConsumed to TDD lib
         public static void AssertBytesConsumed(Action<BinaryReader> act, int expectedNumberOfBytes)
         {
             var bytes = new byte[2 * expectedNumberOfBytes];
