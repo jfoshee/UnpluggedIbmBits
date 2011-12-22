@@ -6,7 +6,7 @@
     <title>$title$</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
-    <projectUrl>https://github.com/jfoshee/UnpluggedSegy</projectUrl>
+    <projectUrl>https://github.com/jfoshee/UnpluggedIbmBits</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <copyright>Copyright 2011</copyright>
