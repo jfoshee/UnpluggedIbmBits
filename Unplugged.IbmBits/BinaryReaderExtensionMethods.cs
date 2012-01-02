@@ -9,11 +9,14 @@ namespace Unplugged.IbmBits
         /// Reads the requested number of 8-bit EBCDIC encoded characters from the stream and converts them to a 
         /// Unicode string.
         /// </summary>
-        /// <param name="length">The number of bytes to read</param>
-        /// <returns>Unicode encoded string</returns>
-        public static string ReadStringEbcdic(this BinaryReader reader, int length)
+        /// <param name="count">The number of bytes to read</param>
+        /// <returns>
+        /// Unicode encoded string converted from bytes read from the stream.
+        /// The length of the string might be less than the number of bytes requested if the end of the stream is reached.
+        /// </returns>
+        public static string ReadStringEbcdic(this BinaryReader reader, int count)
         {
-            var bytes = reader.ReadBytes(length);
+            var bytes = reader.ReadBytes(count);
             return IbmConverter.ToString(bytes);
         }
 
@@ -22,7 +25,7 @@ namespace Unplugged.IbmBits
         /// </summary>
         public static Int16 ReadInt16BigEndian(this BinaryReader reader)
         {
-            var bytes = reader.ReadBytes(2);
+            var bytes = ReadBytes(reader, 2);
             return IbmConverter.ToInt16(bytes);
         }
 
@@ -31,7 +34,7 @@ namespace Unplugged.IbmBits
         /// </summary>
         public static Int32 ReadInt32BigEndian(this BinaryReader reader)
         {
-            var bytes = reader.ReadBytes(4);
+            var bytes = ReadBytes(reader, 4);
             return IbmConverter.ToInt32(bytes);
         }
 
@@ -42,8 +45,16 @@ namespace Unplugged.IbmBits
         /// <returns>IEEE formatted single precision floating point</returns>
         public static float ReadSingleIbm(this BinaryReader reader)
         {
-            var bytes = reader.ReadBytes(4);
+            var bytes = ReadBytes(reader, 4);
             return IbmConverter.ToSingle(bytes);
+        }
+
+        private static byte[] ReadBytes(BinaryReader reader, int count)
+        {
+            var bytes = reader.ReadBytes(count);
+            if (bytes.Length < count)
+                throw new EndOfStreamException("Unable to read beyond the end of the stream.");
+            return bytes;
         }
     }
 }

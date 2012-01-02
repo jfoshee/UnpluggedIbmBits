@@ -13,7 +13,7 @@ namespace Unplugged.IbmBits.Tests
         public void ReadEbcdicShouldConsumeRequestedBytes()
         {
             var expected = 23;
-            AssertBytesConsumed(r => r.ReadStringEbcdic(expected), expected);
+            VerifyBytesConsumed(r => r.ReadStringEbcdic(expected), expected);
         }
 
         [TestMethod]
@@ -29,7 +29,13 @@ namespace Unplugged.IbmBits.Tests
         [TestMethod]
         public void Int16ShouldConsume2Bytes()
         {
-            AssertBytesConsumed(r => r.ReadInt16BigEndian(), 2);
+            VerifyBytesConsumed(r => r.ReadInt16BigEndian(), 2);
+        }
+
+        [TestMethod]
+        public void Int16ShouldThrowIfNot2BytesInStream()
+        {
+            VerifyThrowsExceptionIfStreamTooShort(r => r.ReadInt16BigEndian(), 2);
         }
 
         [TestMethod]
@@ -45,7 +51,13 @@ namespace Unplugged.IbmBits.Tests
         [TestMethod]
         public void Int32ShouldConsume4Bytes()
         {
-            AssertBytesConsumed(r => r.ReadInt32BigEndian(), 4);
+            VerifyBytesConsumed(r => r.ReadInt32BigEndian(), 4);
+        }
+
+        [TestMethod]
+        public void Int32ShouldThrowIfNot4BytesInStream()
+        {
+            VerifyThrowsExceptionIfStreamTooShort(r => r.ReadInt32BigEndian(), 4);
         }
 
         [TestMethod]
@@ -61,7 +73,19 @@ namespace Unplugged.IbmBits.Tests
         [TestMethod]
         public void SingleShouldConsume4Bytes()
         {
-            AssertBytesConsumed(r => r.ReadSingleIbm(), 4);
+            VerifyBytesConsumed(r => r.ReadSingleIbm(), 4);
+        }
+
+        [TestMethod]
+        public void SingleShouldThrowIfNot4BytesInStream()
+        {
+            VerifyThrowsExceptionIfStreamTooShort(r => r.ReadSingleIbm(), 4);
+        }
+
+        [TestMethod]
+        public void ShouldThrowSameExceptionAsNativeMethods()
+        {
+            VerifyThrowsExceptionIfStreamTooShort(r => r.ReadSingle(), 4);
         }
 
         [TestMethod]
@@ -71,8 +95,6 @@ namespace Unplugged.IbmBits.Tests
         }
 
         #endregion
-
-        // TODO: System.IO.EndOfStreamException: Unable to read beyond the end of the stream.
 
         private static void VerifyValueFromByteStream<T>(T expected, Func<BinaryReader, T> act, byte[] bytes)
         {
@@ -87,8 +109,8 @@ namespace Unplugged.IbmBits.Tests
             }
         }
 
-        // TODO: Move AssertBytesConsumed to TDD lib
-        public static void AssertBytesConsumed(Action<BinaryReader> act, int expectedNumberOfBytes)
+        // TODO: Move VerifyBytesConsumed to TDD lib
+        public static void VerifyBytesConsumed(Action<BinaryReader> act, int expectedNumberOfBytes)
         {
             var bytes = new byte[2 * expectedNumberOfBytes];
             using (var stream = new MemoryStream(bytes))
@@ -100,6 +122,29 @@ namespace Unplugged.IbmBits.Tests
                 // Assert
                 Assert.AreEqual(expectedNumberOfBytes, stream.Position, "Wrong number of bytes were consumed.");
             }
+        }
+
+        private static void VerifyThrowsExceptionIfStreamTooShort(Action<BinaryReader> act, int requiredNumberOfBytes)
+        {
+            // Arrange
+            var bytes = new byte[requiredNumberOfBytes - 1];
+            using (var stream = new MemoryStream(bytes))
+            using (var reader = new BinaryReader(stream))
+            {
+                // Act
+                try
+                {
+                    act(reader);
+                }
+
+                // Assert
+                catch (EndOfStreamException ex)
+                {
+                    Assert.AreEqual("Unable to read beyond the end of the stream.", ex.Message);
+                    return;
+                }
+            }
+            Assert.Fail("Expected an EndOfStreamException");
         }
     }
 }
