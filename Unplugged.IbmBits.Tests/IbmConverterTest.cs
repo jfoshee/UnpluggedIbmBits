@@ -108,10 +108,10 @@ namespace Unplugged.IbmBits.Tests
         public void ShouldConvertZeroInt16()
         {
             // Arrange
-            var bytes = new byte[2];
+            var value = new byte[2];
 
             // Act
-            Int16 result = IbmConverter.ToInt16(bytes);
+            Int16 result = IbmConverter.ToInt16(value);
 
             // Assert
             Assert.AreEqual(0, result);
@@ -121,10 +121,10 @@ namespace Unplugged.IbmBits.Tests
         public void ShouldConvertNegativeInt16()
         {
             // Arrange
-            var bytes = new byte[] { 0xAB, 0xCD };
+            var value = new byte[] { 0xAB, 0xCD };
 
             // Act
-            var result = IbmConverter.ToInt16(bytes);
+            var result = IbmConverter.ToInt16(value);
 
             // Assert
             Assert.AreEqual(-21555, result);
@@ -134,13 +134,41 @@ namespace Unplugged.IbmBits.Tests
         public void ShouldIgnoreTrailingBytesInt16()
         {
             // Arrange
-            var bytes = new byte[] { 0, 1, 99, 99 };
+            var value = new byte[] { 0, 1, 99, 99 };
 
             // Act
-            var result = IbmConverter.ToInt16(bytes);
+            var result = IbmConverter.ToInt16(value);
 
             // Assert
             Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
+        public void ShouldConvertInt16WithStartIndex()
+        {
+            // Arrange
+            var value = new byte[] { 99, 99, 99, 0, 1, 99 };
+            var startIndex = 3;
+
+            // Act
+            Int16 result = IbmConverter.ToInt16(value, startIndex);
+
+            // Assert
+            Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
+        public void ShouldConvertAnotherInt16WithStartIndex()
+        {
+            // Arrange
+            var value = new byte[] { 99, 99, 2, 0, 99 };
+            var startIndex = 2;
+
+            // Act
+            Int16 result = IbmConverter.ToInt16(value, startIndex);
+
+            // Assert
+            Assert.AreEqual(512, result);
         }
 
         #endregion
@@ -186,14 +214,42 @@ namespace Unplugged.IbmBits.Tests
             Assert.AreEqual(1, result);
         }
 
+        [TestMethod]
+        public void ShouldConvertInt32WithStartIndex()
+        {
+            // Arrange
+            var value = new byte[] { 99, 99, 99, 0, 0, 0, 1, 99 };
+            var startIndex = 3;
+
+            // Act
+            Int32 result = IbmConverter.ToInt32(value, startIndex);
+
+            // Assert
+            Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
+        public void ShouldConvertAnotherInt32WithStartIndex()
+        {
+            // Arrange
+            var value = new byte[] { 99, 99, 1, 2, 4, 0, 99 };
+            var startIndex = 2;
+
+            // Act
+            var result = IbmConverter.ToInt32(value, startIndex);
+
+            // Assert
+            Assert.AreEqual(16909312, result);
+        }
+
         #endregion
 
         #region ToSingle()
 
-        private static void VerifyToSingleReturns(float expected, byte[] bytes)
+        private static void VerifyToSingleReturns(float expected, byte[] value)
         {
             // Act
-            float result = IbmConverter.ToSingle(bytes);
+            float result = IbmConverter.ToSingle(value);
 
             // Assert
             Assert.AreEqual(expected, result, 0.0001);

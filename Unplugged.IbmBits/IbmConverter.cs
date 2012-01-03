@@ -8,9 +8,9 @@ namespace Unplugged.IbmBits
         /// <summary>
         /// Returns a Unicode string converted from a byte array of EBCDIC encoded characters
         /// </summary>
-        public static string ToString(byte[] bytes)
+        public static string ToString(byte[] value)
         {
-            return ToString(bytes, 0);
+            return ToString(value, 0);
         }
 
         /// <summary>
@@ -18,11 +18,11 @@ namespace Unplugged.IbmBits
         /// starting at the specified position
         /// </summary>
         /// <param name="startingIndex">
-        /// Zero-based starting index of starting position in bytes array
+        /// Zero-based starting index of starting position in value array
         /// </param>
-        public static string ToString(byte[] bytes, int startingIndex)
+        public static string ToString(byte[] value, int startingIndex)
         {
-            return ToString(bytes, startingIndex, bytes.Length - startingIndex);
+            return ToString(value, startingIndex, value.Length - startingIndex);
         }
 
         /// <summary>
@@ -30,34 +30,50 @@ namespace Unplugged.IbmBits
         /// starting at the specified position of the given length
         /// </summary>
         /// <param name="startingIndex">
-        /// Zero-based starting index of starting position in bytes array
+        /// Zero-based starting index of starting position in value array
         /// </param>
         /// <param name="length">
         /// Number of characters to convert
         /// </param>
-        public static string ToString(byte[] bytes, int startingIndex, int length)
+        public static string ToString(byte[] value, int startingIndex, int length)
         {
             var unicode = Encoding.Unicode;
             var ebcdic = Encoding.GetEncoding("IBM037");
-            var unicodeBytes = Encoding.Convert(ebcdic, unicode, bytes, startingIndex, length);
+            var unicodeBytes = Encoding.Convert(ebcdic, unicode, value, startingIndex, length);
             return unicode.GetString(unicodeBytes);
         }
 
         /// <summary>
         /// Returns a 16-bit signed integer converted from two bytes encoding a big endian 16-bit signed integer
         /// </summary>
-        public static Int16 ToInt16(byte[] bytes)
+        public static Int16 ToInt16(byte[] value)
         {
-            bytes = new byte[] { bytes[1], bytes[0] };
+            return ToInt16(value, 0);
+        }
+
+        /// <summary>
+        /// Returns a 16-bit signed integer converted from two bytes in a specified position encoding a big endian 16-bit signed integer
+        /// </summary>
+        public static Int16 ToInt16(byte[] value, int startIndex)
+        {
+            var bytes = new byte[] { value[startIndex + 1], value[startIndex] };
             return BitConverter.ToInt16(bytes, 0);
         }
 
         /// <summary>
         /// Returns a 32-bit signed integer converted from four bytes encoding a big endian 32-bit signed integer
         /// </summary>
-        public static int ToInt32(byte[] bytes)
+        public static int ToInt32(byte[] value)
         {
-            bytes = new byte[] { bytes[3], bytes[2], bytes[1], bytes[0] };
+            return ToInt32(value, 0);
+        }
+
+        /// <summary>
+        /// Returns a 32-bit signed integer converted from four bytes at a specified position encoding a big endian 32-bit signed integer
+        /// </summary>
+        public static Int32 ToInt32(byte[] value, int startIndex)
+        {
+            var bytes = new byte[] { value[startIndex + 3], value[startIndex + 2], value[startIndex + 1], value[startIndex] };
             return BitConverter.ToInt32(bytes, 0);
         }
 
@@ -65,13 +81,13 @@ namespace Unplugged.IbmBits
         /// Returns a 32-bit IEEE single precision floating point number from four bytes encoding
         /// a single precision number in IBM System/360 Floating Point format
         /// </summary>
-        public static float ToSingle(byte[] bytes)
+        public static float ToSingle(byte[] value)
         {
-            if (0 == BitConverter.ToInt32(bytes, 0))
+            if (0 == BitConverter.ToInt32(value, 0))
                 return 0;
 
             // The first bit is the sign.  The next 7 bits are the exponent.
-            int exponentBits = bytes[0];
+            int exponentBits = value[0];
             var sign = +1.0;
             // Remove sign from first bit
             if (exponentBits >= 128)
@@ -86,7 +102,7 @@ namespace Unplugged.IbmBits
 
             // The fractional part is Big Endian unsigned int to the right of the radix point
             // So we reverse the bytes and pack them back into an int
-            var fractionBytes = new byte[] { bytes[3], bytes[2], bytes[1], 0 };
+            var fractionBytes = new byte[] { value[3], value[2], value[1], 0 };
             var mantissa = BitConverter.ToInt32(fractionBytes, 0);              // TODO: Test if mantissa should be converted with ToUint32
             // And divide by 2^(8 * 3) to move the decimal all the way to the left
             var dividend = 16777216; // Math.Pow(2, 8 * 3);
