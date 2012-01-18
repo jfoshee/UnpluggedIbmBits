@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Unplugged Development")]
 [assembly: AssemblyProduct("Unplugged.IbmBits")]
-[assembly: AssemblyCopyright("Copyright © Unplugged Development 2011")]
+[assembly: AssemblyCopyright("Copyright © Unplugged Development 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

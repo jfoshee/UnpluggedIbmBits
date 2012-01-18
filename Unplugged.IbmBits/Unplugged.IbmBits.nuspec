@@ -7,9 +7,10 @@
     <authors>$author$</authors>
     <owners>$author$</owners>
     <projectUrl>https://github.com/jfoshee/UnpluggedIbmBits</projectUrl>
+    <iconUrl>https://github.com/jfoshee/UnpluggedIbmBits/raw/76dc342f300fb76759865fe9fbc68218a3a2c7af/Unplugged.IbmBits/icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <copyright>Copyright 2011</copyright>
+    <copyright>Copyright 2012</copyright>
     <tags>Legacy, IBM, Binary, Big Endian, EBCDIC, System/360, System/370, IBM Floating Point</tags>
   </metadata>
 </package>
