@@ -16,6 +16,8 @@ namespace Unplugged.IbmBits
         /// </returns>
         public static string ReadStringEbcdic(this BinaryReader reader, int count)
         {
+            if (ReferenceEquals(null, reader))
+                throw new ArgumentNullException("reader");
             var bytes = reader.ReadBytes(count);
             return IbmConverter.ToString(bytes);
         }
@@ -25,6 +27,8 @@ namespace Unplugged.IbmBits
         /// </summary>
         public static Int16 ReadInt16BigEndian(this BinaryReader reader)
         {
+            if (ReferenceEquals(null, reader))
+                throw new ArgumentNullException("reader");
             var bytes = ReadBytes(reader, 2);
             return IbmConverter.ToInt16(bytes);
         }
@@ -34,6 +38,8 @@ namespace Unplugged.IbmBits
         /// </summary>
         public static Int32 ReadInt32BigEndian(this BinaryReader reader)
         {
+            if (ReferenceEquals(null, reader))
+                throw new ArgumentNullException("reader");
             var bytes = ReadBytes(reader, 4);
             return IbmConverter.ToInt32(bytes);
         }
@@ -45,6 +51,8 @@ namespace Unplugged.IbmBits
         /// <returns>IEEE formatted single precision floating point</returns>
         public static float ReadSingleIbm(this BinaryReader reader)
         {
+            if (ReferenceEquals(null, reader))
+                throw new ArgumentNullException("reader");
             var bytes = ReadBytes(reader, 4);
             return IbmConverter.ToSingle(bytes);
         }

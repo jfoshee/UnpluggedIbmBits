@@ -22,6 +22,8 @@ namespace Unplugged.IbmBits
         /// </param>
         public static string ToString(byte[] value, int startingIndex)
         {
+            if (ReferenceEquals(null, value))
+                throw new ArgumentNullException("value");
             return ToString(value, startingIndex, value.Length - startingIndex);
         }
 
@@ -56,6 +58,8 @@ namespace Unplugged.IbmBits
         /// </summary>
         public static Int16 ToInt16(byte[] value, int startIndex)
         {
+            if (ReferenceEquals(null, value))
+                throw new ArgumentNullException("value");
             var bytes = new byte[] { value[startIndex + 1], value[startIndex] };
             return BitConverter.ToInt16(bytes, 0);
         }
@@ -73,6 +77,8 @@ namespace Unplugged.IbmBits
         /// </summary>
         public static Int32 ToInt32(byte[] value, int startIndex)
         {
+            if (ReferenceEquals(null, value))
+                throw new ArgumentNullException("value");
             var bytes = new byte[] { value[startIndex + 3], value[startIndex + 2], value[startIndex + 1], value[startIndex] };
             return BitConverter.ToInt32(bytes, 0);
         }
@@ -83,6 +89,8 @@ namespace Unplugged.IbmBits
         /// </summary>
         public static float ToSingle(byte[] value)
         {
+            if (ReferenceEquals(null, value))
+                throw new ArgumentNullException("value");
             if (0 == BitConverter.ToInt32(value, 0))
                 return 0;
 
@@ -103,7 +111,8 @@ namespace Unplugged.IbmBits
             // The fractional part is Big Endian unsigned int to the right of the radix point
             // So we reverse the bytes and pack them back into an int
             var fractionBytes = new byte[] { value[3], value[2], value[1], 0 };
-            var mantissa = BitConverter.ToInt32(fractionBytes, 0);              // TODO: Test if mantissa should be converted with ToUint32
+            // Note: The sign bit for int32 is in the last byte of the array, which is zero, so we don't have to convert to uint
+            var mantissa = BitConverter.ToInt32(fractionBytes, 0);
             // And divide by 2^(8 * 3) to move the decimal all the way to the left
             var dividend = 16777216; // Math.Pow(2, 8 * 3);
             var fraction = mantissa / (float)dividend;

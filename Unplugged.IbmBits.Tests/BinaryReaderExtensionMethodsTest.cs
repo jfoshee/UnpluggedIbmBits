@@ -22,6 +22,12 @@ namespace Unplugged.IbmBits.Tests
             VerifyValueFromByteStream("J", r => r.ReadStringEbcdic(1), new byte[] { 0xD1 });
         }
 
+        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
+        public void ShouldThrowWhenArgumentNullForReadStringEbcdic()
+        {
+            (null as BinaryReader).ReadStringEbcdic(1);
+        }
+
         #endregion
 
         #region ReadInt16BigEndian()
@@ -44,6 +50,12 @@ namespace Unplugged.IbmBits.Tests
             VerifyValueFromByteStream(2, r => r.ReadInt16BigEndian(), new byte[] { 0, 2 });
         }
 
+        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
+        public void ShouldThrowWhenArgumentNullForReadInt16BigEndian()
+        {
+            (null as BinaryReader).ReadInt16BigEndian();
+        }
+
         #endregion
 
         #region ReadInt32BigEndian()
@@ -64,6 +76,12 @@ namespace Unplugged.IbmBits.Tests
         public void ShouldConvertToInt32()
         {
             VerifyValueFromByteStream(3, r => r.ReadInt32BigEndian(), new byte[] { 0, 0, 0, 3 });
+        }
+
+        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
+        public void ShouldThrowWhenArgumentNullForReadInt32BigEndian()
+        {
+            (null as BinaryReader).ReadInt32BigEndian();
         }
 
         #endregion
@@ -92,6 +110,12 @@ namespace Unplugged.IbmBits.Tests
         public void ShouldConvertToSingle()
         {
             VerifyValueFromByteStream(1f, r => r.ReadSingleIbm(), new byte[] { 65, 16, 0, 0 });
+        }
+
+        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
+        public void ShouldThrowWhenArgumentNullForReadSingleIbm()
+        {
+            (null as BinaryReader).ReadSingleIbm();
         }
 
         #endregion

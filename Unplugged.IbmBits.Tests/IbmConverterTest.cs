@@ -100,6 +100,24 @@ namespace Unplugged.IbmBits.Tests
             Assert.AreEqual("HoHoHo", result);
         }
 
+        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
+        public void ShouldThrowWhenArgumentNullForToStringGivenBytes()
+        {
+            IbmConverter.ToString(null);
+        }
+
+        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
+        public void ShouldThrowWhenArgumentNullForToStringGivenBytesAndIndex()
+        {
+            IbmConverter.ToString(null, 1);
+        }
+
+        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
+        public void ShouldThrowWhenArgumentNullForToStringGivenBytesAndIndexAndLength()
+        {
+            IbmConverter.ToString(null, 1, 1);
+        }
+
         #endregion
 
         #region ToInt16()
@@ -169,6 +187,18 @@ namespace Unplugged.IbmBits.Tests
 
             // Assert
             Assert.AreEqual(512, result);
+        }
+
+        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
+        public void ShouldThrowWhenArgumentNullForToInt16()
+        {
+            IbmConverter.ToInt16(null);
+        }
+
+        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
+        public void ShouldThrowWhenArgumentNullForToInt16WithStartIndex()
+        {
+            IbmConverter.ToInt16(null, 1);
         }
 
         #endregion
@@ -242,6 +272,18 @@ namespace Unplugged.IbmBits.Tests
             Assert.AreEqual(16909312, result);
         }
 
+        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
+        public void ShouldThrowWhenArgumentNullForToInt32()
+        {
+            IbmConverter.ToInt32(null);
+        }
+
+        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
+        public void ShouldThrowWhenArgumentNullForToInt32WithStartIndex()
+        {
+            IbmConverter.ToInt32(null, 1);
+        }
+
         #endregion
 
         #region ToSingle()
@@ -310,6 +352,21 @@ namespace Unplugged.IbmBits.Tests
             bits.CopyTo(bytes, 0);
 
             VerifyToSingleReturns(expected, bytes);
+        }
+
+        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
+        public void ShouldThrowWhenArgumentNullForToSingle()
+        {
+            IbmConverter.ToSingle(null);
+        }
+
+        [TestMethod]
+        public void VerifyFractionBytesCanBeConvertedToInt32()
+        {
+            var fractionBytes = new byte[] { 255, 255, 255, 0 };
+            var i = BitConverter.ToInt32(fractionBytes, 0);
+            var u = BitConverter.ToUInt32(fractionBytes, 0);
+            Assert.AreEqual((int)u, i);
         }
 
         #endregion
