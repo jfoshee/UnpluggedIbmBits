@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		readme.md = readme.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unplugged.IbmBits.MonoTouch", "Unplugged.IbmBits.MonoTouch\Unplugged.IbmBits.MonoTouch.csproj", "{C26C029F-0084-40D8-80E5-45ECF940B99B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,15 @@ Global
 		{ADD3D4A7-2F0C-46C7-AC26-80C96698DC7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADD3D4A7-2F0C-46C7-AC26-80C96698DC7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADD3D4A7-2F0C-46C7-AC26-80C96698DC7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C26C029F-0084-40D8-80E5-45ECF940B99B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C26C029F-0084-40D8-80E5-45ECF940B99B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C26C029F-0084-40D8-80E5-45ECF940B99B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C26C029F-0084-40D8-80E5-45ECF940B99B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Unplugged.IbmBits\Unplugged.IbmBits.csproj
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
