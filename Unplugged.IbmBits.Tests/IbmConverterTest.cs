@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FluentAssertions;
 
 namespace Unplugged.IbmBits.Tests
 {
@@ -26,7 +27,7 @@ namespace Unplugged.IbmBits.Tests
             string result = IbmConverter.ToString(bytes);
 
             // Assert
-            Assert.AreEqual("Hello,", result);
+            result.Should().Be("Hello,");
         }
 
         [TestMethod]
@@ -39,7 +40,7 @@ namespace Unplugged.IbmBits.Tests
             string result = IbmConverter.ToString(bytes);
 
             // Assert
-            Assert.AreEqual("lol!", result);
+            result.Should().Be("lol!");
         }
 
         [TestMethod]
@@ -53,7 +54,7 @@ namespace Unplugged.IbmBits.Tests
             string result = IbmConverter.ToString(bytes, startingIndex);
 
             // Assert
-            Assert.AreEqual(result, "He");
+            result.Should().Be("He");
         }
 
         [TestMethod]
@@ -67,7 +68,7 @@ namespace Unplugged.IbmBits.Tests
             string result = IbmConverter.ToString(bytes, startingIndex);
 
             // Assert
-            Assert.AreEqual(result, "ello");
+            result.Should().Be("ello");
         }
 
         [TestMethod]
@@ -82,7 +83,7 @@ namespace Unplugged.IbmBits.Tests
             string result = IbmConverter.ToString(bytes, startingIndex, length);
 
             // Assert
-            Assert.AreEqual("Hole", result);
+            result.Should().Be("Hole");
         }
 
         [TestMethod]
@@ -97,7 +98,7 @@ namespace Unplugged.IbmBits.Tests
             string result = IbmConverter.ToString(bytes, startingIndex, length);
 
             // Assert
-            Assert.AreEqual("HoHoHo", result);
+            result.Should().Be("HoHoHo");
         }
 
         [TestMethod, ExpectedException(typeof(ArgumentNullException))]
@@ -132,7 +133,7 @@ namespace Unplugged.IbmBits.Tests
             Int16 result = IbmConverter.ToInt16(value);
 
             // Assert
-            Assert.AreEqual(0, result);
+            result.Should().Be(0);
         }
 
         [TestMethod]
@@ -145,7 +146,7 @@ namespace Unplugged.IbmBits.Tests
             var result = IbmConverter.ToInt16(value);
 
             // Assert
-            Assert.AreEqual(-21555, result);
+            result.Should().Be(-21555);
         }
 
         [TestMethod]
@@ -158,7 +159,7 @@ namespace Unplugged.IbmBits.Tests
             var result = IbmConverter.ToInt16(value);
 
             // Assert
-            Assert.AreEqual(1, result);
+            result.Should().Be(1);
         }
 
         [TestMethod]
@@ -172,7 +173,7 @@ namespace Unplugged.IbmBits.Tests
             Int16 result = IbmConverter.ToInt16(value, startIndex);
 
             // Assert
-            Assert.AreEqual(1, result);
+            result.Should().Be(1);
         }
 
         [TestMethod]
@@ -186,7 +187,7 @@ namespace Unplugged.IbmBits.Tests
             Int16 result = IbmConverter.ToInt16(value, startIndex);
 
             // Assert
-            Assert.AreEqual(512, result);
+            result.Should().Be(512);
         }
 
         [TestMethod, ExpectedException(typeof(ArgumentNullException))]
@@ -215,7 +216,7 @@ namespace Unplugged.IbmBits.Tests
             Int32 result = IbmConverter.ToInt32(bytes);
 
             // Assert
-            Assert.AreEqual(0, result);
+            result.Should().Be(0);
         }
 
         [TestMethod]
@@ -228,7 +229,7 @@ namespace Unplugged.IbmBits.Tests
             var result = IbmConverter.ToInt32(bytes);
 
             // Assert
-            Assert.AreEqual(-1985229329, result);
+            result.Should().Be(-1985229329);
         }
 
         [TestMethod]
@@ -241,7 +242,7 @@ namespace Unplugged.IbmBits.Tests
             var result = IbmConverter.ToInt32(bytes);
 
             // Assert
-            Assert.AreEqual(1, result);
+            result.Should().Be(1);
         }
 
         [TestMethod]
@@ -255,7 +256,7 @@ namespace Unplugged.IbmBits.Tests
             Int32 result = IbmConverter.ToInt32(value, startIndex);
 
             // Assert
-            Assert.AreEqual(1, result);
+            result.Should().Be(1);
         }
 
         [TestMethod]
@@ -269,7 +270,7 @@ namespace Unplugged.IbmBits.Tests
             var result = IbmConverter.ToInt32(value, startIndex);
 
             // Assert
-            Assert.AreEqual(16909312, result);
+            result.Should().Be(16909312);
         }
 
         [TestMethod, ExpectedException(typeof(ArgumentNullException))]
@@ -294,7 +295,7 @@ namespace Unplugged.IbmBits.Tests
             float result = IbmConverter.ToSingle(value);
 
             // Assert
-            Assert.AreEqual(expected, result, 0.0001);
+            result.Should().BeInRange(expected - 0.0001f, expected + 0.0001f);
         }
 
         [TestMethod]
@@ -366,7 +367,7 @@ namespace Unplugged.IbmBits.Tests
             var fractionBytes = new byte[] { 255, 255, 255, 0 };
             var i = BitConverter.ToInt32(fractionBytes, 0);
             var u = BitConverter.ToUInt32(fractionBytes, 0);
-            Assert.AreEqual((int)u, i);
+            i.Should().Be((int)u);
         }
 
         #endregion
