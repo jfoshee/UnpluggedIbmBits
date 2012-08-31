@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FluentAssertions;
 
 namespace Unplugged.IbmBits.Tests
 {
@@ -129,7 +130,7 @@ namespace Unplugged.IbmBits.Tests
                 T actual = act(reader);
 
                 // Assert
-                Assert.AreEqual(expected, actual);
+                actual.Should().Be(expected);
             }
         }
 
@@ -144,7 +145,7 @@ namespace Unplugged.IbmBits.Tests
                 act(reader);
 
                 // Assert
-                Assert.AreEqual(expectedNumberOfBytes, stream.Position, "Wrong number of bytes were consumed.");
+                stream.Position.Should().Be(expectedNumberOfBytes, "Wrong number of bytes were consumed.");
             }
         }
 
@@ -155,20 +156,10 @@ namespace Unplugged.IbmBits.Tests
             using (var stream = new MemoryStream(bytes))
             using (var reader = new BinaryReader(stream))
             {
-                // Act
-                try
-                {
-                    act(reader);
-                }
-
-                // Assert
-                catch (EndOfStreamException ex)
-                {
-                    Assert.AreEqual("Unable to read beyond the end of the stream.", ex.Message);
-                    return;
-                }
+                Action action = () => act(reader);
+                action.ShouldThrow<EndOfStreamException>()
+                    .WithMessage("Unable to read beyond the end of the stream.");
             }
-            Assert.Fail("Expected an EndOfStreamException");
         }
     }
 }

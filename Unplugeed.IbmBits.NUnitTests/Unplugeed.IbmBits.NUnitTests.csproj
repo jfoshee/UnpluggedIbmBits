@@ -41,6 +41,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Compile Include="..\Unplugged.IbmBits.Tests\BinaryReaderExtensionMethodsTest.cs">
+      <Link>BinaryReaderExtensionMethodsTest.cs</Link>
+    </Compile>
     <Compile Include="..\Unplugged.IbmBits.Tests\IbmConverterTest.cs">
       <Link>IbmConverterTest.cs</Link>
     </Compile>
