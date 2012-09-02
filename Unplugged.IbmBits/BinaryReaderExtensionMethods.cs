@@ -57,11 +57,11 @@ namespace Unplugged.IbmBits
             return IbmConverter.ToSingle(bytes);
         }
 
-        private static byte[] ReadBytes(BinaryReader reader, int count)
+        static byte[] ReadBytes(BinaryReader reader, int count)
         {
             var bytes = reader.ReadBytes(count);
             if (bytes.Length < count)
-                throw new EndOfStreamException("Unable to read beyond the end of the stream.");
+                throw new EndOfStreamException();
             return bytes;
         }
     }

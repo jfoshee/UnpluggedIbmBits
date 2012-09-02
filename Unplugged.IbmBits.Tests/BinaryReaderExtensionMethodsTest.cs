@@ -157,8 +157,7 @@ namespace Unplugged.IbmBits.Tests
             using (var reader = new BinaryReader(stream))
             {
                 Action action = () => act(reader);
-                action.ShouldThrow<EndOfStreamException>()
-                    .WithMessage("Unable to read beyond the end of the stream.");
+                action.ShouldThrow<EndOfStreamException>();
             }
         }
     }
