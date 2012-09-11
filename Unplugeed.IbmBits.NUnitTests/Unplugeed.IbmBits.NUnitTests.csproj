@@ -38,6 +38,9 @@
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
+    <Reference Include="VisualStudioTestingShim">
+      <HintPath>..\packages\VisualStudioTestingShim\VisualStudioTestingShim.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -47,7 +50,6 @@
     <Compile Include="..\Unplugged.IbmBits.Tests\IbmConverterTest.cs">
       <Link>IbmConverterTest.cs</Link>
     </Compile>
-    <Compile Include="MicrosoftToNunitAttributeShims.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Unplugged.IbmBits\Unplugged.IbmBits.csproj">

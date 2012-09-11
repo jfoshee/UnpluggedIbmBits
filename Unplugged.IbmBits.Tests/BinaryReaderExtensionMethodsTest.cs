@@ -158,6 +158,7 @@ namespace Unplugged.IbmBits.Tests
             {
                 Action action = () => act(reader);
                 action.ShouldThrow<EndOfStreamException>();
+                // TODO: This fails on iOS hardware because it uses JIT compilation
             }
         }
     }

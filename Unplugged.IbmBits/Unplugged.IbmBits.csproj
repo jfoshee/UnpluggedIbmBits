@@ -39,6 +39,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="VisualStudioTestingShim">
+      <HintPath>..\packages\VisualStudioTestingShim\VisualStudioTestingShim.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BinaryReaderExtensionMethods.cs" />
