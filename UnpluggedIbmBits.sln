@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unplugged.IbmBits", "Unplugged.IbmBits\Unplugged.IbmBits.csproj", "{A888F8BC-C046-4A45-8001-10C8C9FAB3AE}"
@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unplugged.IbmBits.MonoTouch", "Unplugged.IbmBits.MonoTouch\Unplugged.IbmBits.MonoTouch.csproj", "{C26C029F-0084-40D8-80E5-45ECF940B99B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unplugeed.IbmBits.NUnitTests", "Unplugeed.IbmBits.NUnitTests\Unplugeed.IbmBits.NUnitTests.csproj", "{D48CCFC2-CBCB-4441-9614-1A5748F79FBA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unplugged.IbmBits.NUnitTests", "Unplugged.IbmBits.NUnitTests\Unplugged.IbmBits.NUnitTests.csproj", "{D48CCFC2-CBCB-4441-9614-1A5748F79FBA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unplugged.IbmBits.MonoTouchTests", "Unplugged.IbmBits.MonoTouchTests\Unplugged.IbmBits.MonoTouchTests.csproj", "{3B89A119-9600-4DCA-A007-9158C38CC0BF}"
 EndProject

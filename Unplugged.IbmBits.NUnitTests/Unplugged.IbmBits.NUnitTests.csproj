@@ -7,26 +7,26 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{D48CCFC2-CBCB-4441-9614-1A5748F79FBA}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Unplugeed.IbmBits.NUnitTests</RootNamespace>
-    <AssemblyName>Unplugeed.IbmBits.NUnitTests</AssemblyName>
+    <RootNamespace>Unplugged.IbmBits.NUnitTests</RootNamespace>
+    <AssemblyName>Unplugged.IbmBits.NUnitTests</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
+    <ConsolePause>False</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
+    <ConsolePause>False</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="nunit.framework">
