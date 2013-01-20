@@ -120,6 +120,8 @@ namespace Unplugged.IbmBits
 
         #endregion
 
+        #region Int32
+
         /// <summary>
         /// Returns a 32-bit signed integer converted from four bytes encoding a big endian 32-bit signed integer
         /// </summary>
@@ -138,6 +140,14 @@ namespace Unplugged.IbmBits
             var bytes = new byte[] { value[startIndex + 3], value[startIndex + 2], value[startIndex + 1], value[startIndex] };
             return BitConverter.ToInt32(bytes, 0);
         }
+
+        public static byte[] GetBytes(int value)
+        {
+            var b = BitConverter.GetBytes(value);
+            return new byte[] { b[3], b[2], b[1], b[0] };
+        }
+
+        #endregion
 
         /// <summary>
         /// Returns a 32-bit IEEE single precision floating point number from four bytes encoding

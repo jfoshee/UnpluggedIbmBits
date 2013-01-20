@@ -356,6 +356,22 @@ namespace Unplugged.IbmBits.Tests
 
         #endregion
 
+        #region GetBytes from Int32
+
+        [TestMethod]
+        public void ShouldConvertFromInt32()
+        {
+            // Arrange
+            Int32 value = -1985229329;
+
+            // Act
+            byte[] result = IbmConverter.GetBytes(value);
+
+            // Assert
+            result.Should().Equal(new byte[] { 0x89, 0xAB, 0xCD, 0xEF });
+        }
+
+        #endregion
         #region ToSingle()
 
         private static void VerifyToSingleReturns(float expected, byte[] value)
