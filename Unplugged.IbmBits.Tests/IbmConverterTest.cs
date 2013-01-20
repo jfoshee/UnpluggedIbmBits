@@ -121,6 +121,58 @@ namespace Unplugged.IbmBits.Tests
 
         #endregion
 
+        #region GetBytes from String
+
+        [TestMethod]
+        public void ShouldConvertFromUnicodeToEbcdic()
+        {
+            // Arrange
+            var value = "Hello,";
+
+            // Act
+            byte[] result = IbmConverter.GetBytes(value);
+
+            // Assert
+            result.Should().Equal(new byte[] { _H, _e, _l, _l, _o, _comma });
+        }
+
+        [TestMethod]
+        public void ShouldConvertFromStringGivenStartingIndex()
+        {
+            // Arrange
+            var value = "lol SHe!";
+            var startingIndex = 5;
+
+            // Act
+            byte[] result = IbmConverter.GetBytes(value, startingIndex);
+
+            // Assert
+            result.Should().Equal(new byte[] { _H, _e, _bang });
+        }
+
+        [TestMethod]
+        public void ShouldConvertFromStringGivenStartingIndexAndLength()
+        {
+            // Arrange
+            var value = "Hole in the ground";
+            var startingIndex = 1;
+            var length = 3;
+
+            // Act
+            byte[] result = IbmConverter.GetBytes(value, startingIndex, length);
+
+            // Assert
+            result.Should().Equal(new byte[] { _o, _l, _e });
+        }
+
+        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
+        public void ShouldThrowWhenArgumentNullForGetBytesFromString()
+        {
+            IbmConverter.GetBytes(null, 1, 1);
+        }
+
+        #endregion
+
         #region ToInt16()
 
         [TestMethod]

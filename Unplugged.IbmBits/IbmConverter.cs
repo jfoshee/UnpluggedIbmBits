@@ -5,6 +5,11 @@ namespace Unplugged.IbmBits
 {
     public static class IbmConverter
     {
+        #region String
+
+        static readonly Encoding _unicode = Encoding.Unicode;
+        static readonly Encoding _ebcdic = Encoding.GetEncoding("IBM037");
+
         /// <summary>
         /// Returns a Unicode string converted from a byte array of EBCDIC encoded characters
         /// </summary>
@@ -18,7 +23,7 @@ namespace Unplugged.IbmBits
         /// starting at the specified position
         /// </summary>
         /// <param name="startingIndex">
-        /// Zero-based starting index of starting position in value array
+        /// Zero-based index of starting position in value array
         /// </param>
         public static string ToString(byte[] value, int startingIndex)
         {
@@ -32,18 +37,56 @@ namespace Unplugged.IbmBits
         /// starting at the specified position of the given length
         /// </summary>
         /// <param name="startingIndex">
-        /// Zero-based starting index of starting position in value array
+        /// Zero-based index of starting position in value array
         /// </param>
         /// <param name="length">
         /// Number of characters to convert
         /// </param>
         public static string ToString(byte[] value, int startingIndex, int length)
         {
-            var unicode = Encoding.Unicode;
-            var ebcdic = Encoding.GetEncoding("IBM037");
-            var unicodeBytes = Encoding.Convert(ebcdic, unicode, value, startingIndex, length);
-            return unicode.GetString(unicodeBytes);
+            var unicodeBytes = Encoding.Convert(_ebcdic, _unicode, value, startingIndex, length);
+            return _unicode.GetString(unicodeBytes);
         }
+        
+        /// <summary>
+        /// Returns a byte array of EBCDIC encoded characters converted from a Unicode string
+        /// </summary>
+        public static byte[] GetBytes(string value)
+        {
+            return GetBytes(value, 0);
+        }
+
+        /// <summary>
+        /// Returns a byte array of EBCDIC encoded characters converted from a Unicode substring 
+        /// starting at the specified position
+        /// </summary>
+        /// <param name="startingIndex">
+        /// Zero-based starting index of substring
+        /// </param>
+        public static byte[] GetBytes(string value, int startingIndex)
+        {
+            return GetBytes(value, startingIndex, value.Length - startingIndex);
+        }
+
+        /// <summary>
+        /// Returns a byte array of EBCDIC encoded characters converted from a Unicode substring 
+        /// starting at the specified position with the given length
+        /// </summary>
+        /// <param name="startingIndex">
+        /// Zero-based starting index of substring
+        /// </param>
+        /// <param name="length">
+        /// Number of characters to convert
+        /// </param>
+        public static byte[] GetBytes(string value, int startingIndex, int length)
+        {
+            if (ReferenceEquals(null, value))
+                throw new ArgumentNullException("value");
+            var unicodeBytes = _unicode.GetBytes(value.ToCharArray(startingIndex, length));
+            return Encoding.Convert(_unicode, _ebcdic, unicodeBytes);
+        }
+
+        #endregion
 
         /// <summary>
         /// Returns a 16-bit signed integer converted from two bytes encoding a big endian 16-bit signed integer
