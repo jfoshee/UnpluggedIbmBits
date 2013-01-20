@@ -47,6 +47,9 @@
     <Compile Include="..\Unplugged.IbmBits.Tests\BinaryReaderExtensionMethodsTest.cs">
       <Link>BinaryReaderExtensionMethodsTest.cs</Link>
     </Compile>
+    <Compile Include="..\Unplugged.IbmBits.Tests\BinaryWriterExtensionMethodsTest.cs">
+      <Link>BinaryWriterExtensionMethodsTest.cs</Link>
+    </Compile>
     <Compile Include="..\Unplugged.IbmBits.Tests\IbmConverterTest.cs">
       <Link>IbmConverterTest.cs</Link>
     </Compile>

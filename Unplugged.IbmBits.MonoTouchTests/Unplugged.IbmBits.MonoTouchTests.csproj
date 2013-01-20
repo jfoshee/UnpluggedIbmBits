@@ -98,6 +98,9 @@
     <None Include="Info.plist" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Unplugged.IbmBits.Tests\BinaryWriterExtensionMethodsTest.cs">
+      <Link>BinaryWriterExtensionMethodsTest.cs</Link>
+    </Compile>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="..\Unplugged.IbmBits.Tests\BinaryReaderExtensionMethodsTest.cs">

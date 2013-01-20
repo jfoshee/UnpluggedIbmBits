@@ -37,15 +37,16 @@
   </ItemGroup>
   <Import Project="$(ProgramFiles)\MSBuild\MonoTouch\Novell.MonoTouch.Common.targets" Condition="'$(windir)' != '' " />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <Folder Include="Unplugged.IbmBits\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Compile Include="..\Unplugged.IbmBits\BinaryReaderExtensionMethods.cs">
-      <Link>Unplugged.IbmBits\BinaryReaderExtensionMethods.cs</Link>
+      <Link>BinaryReaderExtensionMethods.cs</Link>
+    </Compile>
+    <Compile Include="..\Unplugged.IbmBits\BinaryWriterExtensionMethods.cs">
+      <Link>BinaryWriterExtensionMethods.cs</Link>
     </Compile>
     <Compile Include="..\Unplugged.IbmBits\IbmConverter.cs">
-      <Link>Unplugged.IbmBits\IbmConverter.cs</Link>
+      <Link>IbmConverter.cs</Link>
     </Compile>
   </ItemGroup>
 </Project>

@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BinaryReaderExtensionMethods.cs" />
+    <Compile Include="BinaryWriterExtensionMethods.cs" />
     <Compile Include="IbmConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
