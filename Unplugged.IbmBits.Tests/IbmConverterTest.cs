@@ -256,6 +256,23 @@ namespace Unplugged.IbmBits.Tests
 
         #endregion
 
+        #region GetBytes from Int16
+
+        [TestMethod]
+        public void ShouldConvertFromInt16()
+        {
+            // Arrange
+            Int16 value = -21555;
+
+            // Act
+            byte[] result = IbmConverter.GetBytes(value);
+
+            // Assert
+            result.Should().Equal(new byte[] { 0xAB, 0xCD });
+        }
+
+        #endregion
+
         #region ToInt32()
 
         [TestMethod]

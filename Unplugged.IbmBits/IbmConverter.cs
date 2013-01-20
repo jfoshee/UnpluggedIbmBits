@@ -88,6 +88,8 @@ namespace Unplugged.IbmBits
 
         #endregion
 
+        #region Int16
+
         /// <summary>
         /// Returns a 16-bit signed integer converted from two bytes encoding a big endian 16-bit signed integer
         /// </summary>
@@ -106,6 +108,17 @@ namespace Unplugged.IbmBits
             var bytes = new byte[] { value[startIndex + 1], value[startIndex] };
             return BitConverter.ToInt16(bytes, 0);
         }
+
+        /// <summary>
+        /// Returns two bytes encoding a big endian 16-bit signed integer given a 16-bit signed integer
+        /// </summary>
+        public static byte[] GetBytes(short value)
+        {
+            var b = BitConverter.GetBytes(value);
+            return new byte[] { b[1], b[0] };
+        }
+
+        #endregion
 
         /// <summary>
         /// Returns a 32-bit signed integer converted from four bytes encoding a big endian 32-bit signed integer
