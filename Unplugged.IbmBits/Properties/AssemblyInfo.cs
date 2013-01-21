@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Unplugged.IbmBits")]
-[assembly: AssemblyDescription("Helps read and convert from legacy IBM System formats to .NET types. Includes converters and BinaryReader extensions for EBCDIC string, Big Endian Int16, Big Endian Int32 and IBM System/360 single precision floating point format.")]
+[assembly: AssemblyDescription("Helps read/write and convert between legacy IBM System formats and .NET types. Includes IbmConverter class as well as BinaryReader & BinaryWriter extensions for EBCDIC string, Big Endian Int16, Big Endian Int32 and IBM System/360 single precision floating point format.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Unplugged Development")]
 [assembly: AssemblyProduct("Unplugged.IbmBits")]
@@ -32,6 +32,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.0.0.5")]
-[assembly: AssemblyFileVersion("0.0.0.5")]
+[assembly: AssemblyVersion("1.0")]
+[assembly: AssemblyFileVersion("1.0")]
 [assembly: CLSCompliant(true)]

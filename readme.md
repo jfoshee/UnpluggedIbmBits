@@ -1,8 +1,8 @@
 # Legacy IBM Data Reading Library in C# #
 
-Helps read and convert from legacy IBM System formats to .NET types. 
-Includes converters and BinaryReader extensions for EBCDIC string, 
-Big Endian Int16, Big Endian Int32 and 
+Helps read/write and convert between legacy IBM System formats and .NET types. 
+Includes IbmConverter class as well as BinaryReader & BinaryWriter extensions 
+for EBCDIC string, Big Endian Int16, Big Endian Int32 and 
 IBM System/360 single precision floating point format.
 
 Issues welcome.
@@ -23,4 +23,17 @@ using (var reader = new BinaryReader(stream))
     int i16 = reader.ReadInt16BigEndian();
     int i32 = reader.ReadInt32BigEndian();
 }
+```
+
+### Example of using BinaryWriter extension methods
+
+```C#
+    using (var stream = File.OpenWrite("punchcard.bin"))
+    using (var writer = new BinaryWriter(stream))
+    {
+        writer.WriteEbcdic("Hello, World");
+        writer.WriteIbmSingle(3.14f);
+        writer.WriteBigEndian((Int16) 13);
+        writer.WriteBigEndian((Int32) 54321);
+    }
 ```

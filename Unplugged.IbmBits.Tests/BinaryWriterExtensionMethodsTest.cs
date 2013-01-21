@@ -54,6 +54,5 @@ namespace Unplugged.IbmBits.Tests
             }
             bytes.Should().Equal(expected);
         }
-
     }
 }
