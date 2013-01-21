@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Unplugged.IbmBits")]
-[assembly: AssemblyDescription("Helps read/write and convert between legacy IBM System formats and .NET types. Includes IbmConverter class as well as BinaryReader & BinaryWriter extensions for EBCDIC string, Big Endian Int16, Big Endian Int32 and IBM System/360 single precision floating point format.")]
+[assembly: AssemblyDescription("Helps read/write and convert between legacy IBM System formats and .NET types. Includes IbmConverter class as well as BinaryReader &amp; BinaryWriter extensions for EBCDIC string, Big Endian Int16, Big Endian Int32 and IBM System/360 single precision floating point format.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Unplugged Development")]
 [assembly: AssemblyProduct("Unplugged.IbmBits")]
