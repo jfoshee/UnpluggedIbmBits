@@ -420,25 +420,9 @@ namespace Unplugged.IbmBits.Tests
         }
 
         [TestMethod]
-        public void SampleValueFromWikipedia()
+        public void SampleValueFromWikipediaToSingle()
         {
-            // This test comes from the example described here: http://en.wikipedia.org/wiki/IBM_Floating_Point_Architecture#An_Example
-            // The difference is the bits have to be reversed per byte because the highest order bit is on the right
-            // Arrange
-            var expected = -118.625f;
-            // 0100 0011 0110 1110 0000 0101 0000 0000
-            var bools = new bool[] 
-            {
-                false, true, false, false,  false, false, true, true,  
-                false, true, true, false,  true, true, true, false,  
-                false, false, false, false,  false, true, false, true,  
-                false, false, false, false,  false, false, false, false, 
-            };
-            var bits = new BitArray(bools);
-            var bytes = new byte[4];
-            bits.CopyTo(bytes, 0);
-
-            VerifyToSingleReturns(expected, bytes);
+            VerifyToSingleReturns(_wikipediaSingle, GetWikipediaSampleBytes());
         }
 
         [TestMethod, ExpectedException(typeof(ArgumentNullException))]
@@ -467,18 +451,6 @@ namespace Unplugged.IbmBits.Tests
         }
 
         [TestMethod]
-        public void SingleConversionForRandomNumbers()
-        {
-            var random = new Random(51293);
-            for (int i = 0; i < 100; i++)
-            {
-                var value = (Single) (random.NextDouble() * 100);
-                VerifySingleConversion(value);
-                VerifySingleConversion(-value);
-            }
-        }
-
-        [TestMethod]
         public void BytesFromOne()
         {
             VerifySingleConversion(1f);
@@ -497,8 +469,37 @@ namespace Unplugged.IbmBits.Tests
         }
 
         [TestMethod]
-        public void WikipediaReverse()
+        public void SampleValueFromWikipediaToBytes()
         {
+            IbmConverter.GetBytes(_wikipediaSingle).Should().Equal(GetWikipediaSampleBytes());
+        }
+
+        [TestMethod]
+        public void SingleConversionForRandomNumbers()
+        {
+            var random = new Random(51293);
+            for (int i = 0; i < 1000; i++)
+            {
+                var value = (Single)(random.NextDouble() * 100);
+                VerifySingleConversion(value);
+                VerifySingleConversion(-value);
+            }
+        }
+
+        private static void VerifySingleConversion(Single value)
+        {
+            byte[] result = IbmConverter.GetBytes(value);
+            var reverseValue = IbmConverter.ToSingle(result);
+            var epsilon = 0.0001f;
+            reverseValue.Should().BeInRange(value - epsilon, value + epsilon);
+        }
+
+        float _wikipediaSingle = -118.625f;
+
+        byte[] GetWikipediaSampleBytes()
+        {
+            // This test comes from the example described here: http://en.wikipedia.org/wiki/IBM_Floating_Point_Architecture#An_Example
+            // The difference is the bits have to be reversed per byte because the highest order bit is on the right
             // 0100 0011 0110 1110 0000 0101 0000 0000
             var bools = new bool[] 
             {
@@ -508,17 +509,9 @@ namespace Unplugged.IbmBits.Tests
                 false, false, false, false,  false, false, false, false, 
             };
             var bits = new BitArray(bools);
-            var expected = new byte[4];
-            bits.CopyTo(expected, 0);
-            IbmConverter.GetBytes(-118.625f).Should().Equal(expected);
-        }
-
-        private static void VerifySingleConversion(Single value)
-        {
-            byte[] result = IbmConverter.GetBytes(value);
-            var reverseValue = IbmConverter.ToSingle(result);
-            var epsilon = 0.0001f;
-            reverseValue.Should().BeInRange(value - epsilon, value + epsilon);
+            var bytes = new byte[4];
+            bits.CopyTo(bytes, 0);
+            return bytes;
         }
 
         #endregion

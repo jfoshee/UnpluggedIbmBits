@@ -151,6 +151,10 @@ namespace Unplugged.IbmBits
 
         #region Single
 
+        static readonly int _ibmBase = 16;
+        static readonly byte _exponentBias = 64;
+        static readonly int _threeByteShift = 16777216;
+
         /// <summary>
         /// Returns a 32-bit IEEE single precision floating point number from four bytes encoding
         /// a single precision number in IBM System/360 Floating Point format
@@ -163,7 +167,7 @@ namespace Unplugged.IbmBits
                 return 0;
 
             // The first bit is the sign.  The next 7 bits are the exponent.
-            int exponentBits = value[0];
+            byte exponentBits = value[0];
             var sign = +1.0;
             // Remove sign from first bit
             if (exponentBits >= 128)
@@ -171,10 +175,9 @@ namespace Unplugged.IbmBits
                 sign = -1.0;
                 exponentBits -= 128;
             }
-            // Remove the bias of 64 from the exponent
-            exponentBits -= 64;
-            var ibmBase = 16;
-            var exponent = Math.Pow(ibmBase, exponentBits);
+            // Remove the bias from the exponent
+            exponentBits -= _exponentBias;
+            var exponent = Math.Pow(_ibmBase, exponentBits);
 
             // The fractional part is Big Endian unsigned int to the right of the radix point
             // So we reverse the bytes and pack them back into an int
@@ -182,8 +185,7 @@ namespace Unplugged.IbmBits
             // Note: The sign bit for int32 is in the last byte of the array, which is zero, so we don't have to convert to uint
             var mantissa = BitConverter.ToInt32(fractionBytes, 0);
             // And divide by 2^(8 * 3) to move the decimal all the way to the left
-            var dividend = 16777216; // Math.Pow(2, 8 * 3);
-            var fraction = mantissa / (float)dividend;
+            var fraction = mantissa / (float)_threeByteShift;
 
             return (float)(sign * exponent * fraction);
         }
@@ -204,17 +206,17 @@ namespace Unplugged.IbmBits
             var v = Math.Abs(value);
 
             // Fraction
-            var v_16 = Math.Log(v, 16);
-            var moveRadix = (int)v_16 + 1;      // The number of digits we need to move the radix point
-            var fraction = v / (Math.Pow(16, moveRadix));
-            var fractionInt = (int)(16777216 * fraction);
-            var fractionBytesLE = BitConverter.GetBytes(fractionInt);
-            bytes[3] = fractionBytesLE[0];
-            bytes[2] = fractionBytesLE[1];
-            bytes[1] = fractionBytesLE[2];
+            // Find the number of digits (in the IBM base) we need to move the radix point to get a value that is less than 1
+            var moveRadix = (int)Math.Log(v, _ibmBase) + 1;
+            var fraction = v / (Math.Pow(_ibmBase, moveRadix));
+            var fractionInt = (int)(_threeByteShift * fraction);
+            var fractionBytes = BitConverter.GetBytes(fractionInt);
+            bytes[3] = fractionBytes[0];
+            bytes[2] = fractionBytes[1];
+            bytes[1] = fractionBytes[2];
 
             // Exponent
-            var exponent = moveRadix + 64;
+            var exponent = moveRadix + _exponentBias;
             bytes[0] += (byte)exponent;
             return bytes;
         }
