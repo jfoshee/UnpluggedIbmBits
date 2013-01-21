@@ -149,11 +149,13 @@ namespace Unplugged.IbmBits
 
         #endregion
 
+        #region Single
+
         /// <summary>
         /// Returns a 32-bit IEEE single precision floating point number from four bytes encoding
         /// a single precision number in IBM System/360 Floating Point format
         /// </summary>
-        public static float ToSingle(byte[] value)
+        public static Single ToSingle(byte[] value)
         {
             if (ReferenceEquals(null, value))
                 throw new ArgumentNullException("value");
@@ -185,5 +187,38 @@ namespace Unplugged.IbmBits
 
             return (float)(sign * exponent * fraction);
         }
+
+        /// <summary>
+        /// Given a 32-bit IEEE single precision floating point number, returns four bytes encoding
+        /// a single precision number in IBM System/360 Floating Point format
+        /// </summary>
+        public static byte[] GetBytes(Single value)
+        {
+            var bytes = new byte[4];
+            if (value == 0)
+                return bytes;
+
+            // Sign
+            if (value < 0)
+                bytes[0] = 128;
+            var v = Math.Abs(value);
+
+            // Fraction
+            var v_16 = Math.Log(v, 16);
+            var moveRadix = (int)v_16 + 1;      // The number of digits we need to move the radix point
+            var fraction = v / (Math.Pow(16, moveRadix));
+            var fractionInt = (int)(16777216 * fraction);
+            var fractionBytesLE = BitConverter.GetBytes(fractionInt);
+            bytes[3] = fractionBytesLE[0];
+            bytes[2] = fractionBytesLE[1];
+            bytes[1] = fractionBytesLE[2];
+
+            // Exponent
+            var exponent = moveRadix + 64;
+            bytes[0] += (byte)exponent;
+            return bytes;
+        }
+
+        #endregion
     }
 }

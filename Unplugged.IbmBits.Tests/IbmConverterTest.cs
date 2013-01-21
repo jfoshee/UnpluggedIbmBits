@@ -372,6 +372,7 @@ namespace Unplugged.IbmBits.Tests
         }
 
         #endregion
+
         #region ToSingle()
 
         private static void VerifyToSingleReturns(float expected, byte[] value)
@@ -457,6 +458,70 @@ namespace Unplugged.IbmBits.Tests
 
         #endregion
 
+        #region GetBytes from Single
+
+        [TestMethod]
+        public void BytesFromZero()
+        {
+            VerifySingleConversion(0);
+        }
+
+        [TestMethod]
+        public void SingleConversionForRandomNumbers()
+        {
+            var random = new Random(51293);
+            for (int i = 0; i < 100; i++)
+            {
+                var value = (Single) (random.NextDouble() * 100);
+                VerifySingleConversion(value);
+                VerifySingleConversion(-value);
+            }
+        }
+
+        [TestMethod]
+        public void BytesFromOne()
+        {
+            VerifySingleConversion(1f);
+        }
+
+        [TestMethod]
+        public void BytesFromNegativeOne()
+        {
+            VerifySingleConversion(-1f);
+        }
+
+        [TestMethod]
+        public void SampleValueToSegy()
+        {
+            VerifySingleConversion(-0.1248f);
+        }
+
+        [TestMethod]
+        public void WikipediaReverse()
+        {
+            // 0100 0011 0110 1110 0000 0101 0000 0000
+            var bools = new bool[] 
+            {
+                false, true, false, false,  false, false, true, true,  
+                false, true, true, false,  true, true, true, false,  
+                false, false, false, false,  false, true, false, true,  
+                false, false, false, false,  false, false, false, false, 
+            };
+            var bits = new BitArray(bools);
+            var expected = new byte[4];
+            bits.CopyTo(expected, 0);
+            IbmConverter.GetBytes(-118.625f).Should().Equal(expected);
+        }
+
+        private static void VerifySingleConversion(Single value)
+        {
+            byte[] result = IbmConverter.GetBytes(value);
+            var reverseValue = IbmConverter.ToSingle(result);
+            var epsilon = 0.0001f;
+            reverseValue.Should().BeInRange(value - epsilon, value + epsilon);
+        }
+
+        #endregion
         // TODO: Support for running on Big Endian architecture
     }
 }
