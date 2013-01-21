@@ -8,8 +8,6 @@ namespace Unplugged.IbmBits.Tests
     [TestClass]
     public class BinaryWriterExtensionMethodsTest
     {
-        #region WriteStringEbcdic
-
         [TestMethod]
         public void WriteEbcdicShouldWriteConvertedBytes()
         {
@@ -18,13 +16,29 @@ namespace Unplugged.IbmBits.Tests
             VerifyBytesWritten(w => w.WriteEbcdic(value), expected);
         }
 
-        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
-        public void ShouldThrowWhenArgumentNullForWriteEbcdic()
+        [TestMethod]
+        public void WriteInt16ShouldReverseBytes()
         {
-            (null as BinaryWriter).WriteEbcdic(" ");
+            Int16 value = 100 + 7 * 256;
+            var expected = new byte[] { 7, 100 };
+            VerifyBytesWritten(w => w.WriteBigEndian(value), expected);
         }
 
-        #endregion
+        [TestMethod]
+        public void WriteInt32ShouldReverseBytes()
+        {
+            Int32 value = 13 + (11 + (29 + 17 * 256) * 256) * 256;
+            var expected = new byte[] { 17, 29, 11, 13 };
+            VerifyBytesWritten(w => w.WriteBigEndian(value), expected);
+        }
+
+        [TestMethod]
+        public void WriteSingleShouldConvertToIbmFormat()
+        {
+            Single value = 64.125488f;
+            var expected = new byte[] { 66, 64, 32, 32 };
+            VerifyBytesWritten(w => w.WriteIbmSingle(value), expected);
+        }
 
         public static void VerifyBytesWritten(Action<BinaryWriter> act, byte[] expected)
         {

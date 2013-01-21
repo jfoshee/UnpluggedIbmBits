@@ -10,8 +10,33 @@ namespace Unplugged.IbmBits
         /// </summary>
         public static void WriteEbcdic(this BinaryWriter writer, string value)
         {
-            if (ReferenceEquals(null, writer))
-                throw new ArgumentNullException("writer");
+            var bytes = IbmConverter.GetBytes(value);
+            writer.Write(bytes);
+        }
+
+        /// <summary>
+        /// Writes a big endian encoded Int16 to the stream
+        /// </summary>
+        public static void WriteBigEndian(this BinaryWriter writer, Int16 value)
+        {
+            var bytes = IbmConverter.GetBytes(value);
+            writer.Write(bytes);
+        }
+
+        /// <summary>
+        /// Writes a big endian encoded Int32 to the stream
+        /// </summary>
+        public static void WriteBigEndian(this BinaryWriter writer, Int32 value)
+        {
+            var bytes = IbmConverter.GetBytes(value);
+            writer.Write(bytes);
+        }
+
+        /// <summary>
+        /// Writes an IBM System/360 Floating Point encoded Single to the stream
+        /// </summary>
+        public static void WriteIbmSingle(this BinaryWriter writer, Single value)
+        {
             var bytes = IbmConverter.GetBytes(value);
             writer.Write(bytes);
         }
