@@ -56,6 +56,21 @@ namespace Unplugged.IbmBits
             var bytes = ReadBytes(reader, 4);
             return IbmConverter.ToSingle(bytes);
         }
+        
+        /// <summary>
+        /// Reads a pack decimal from the stream
+        /// </summary>
+        /// <param name="reader">The reader from which the bytes will be read</param>
+        /// <param name="storageLength">The total storage length of the packed decimal</param>
+        /// <param name="scale">The scale of the decimal (number of number after the .)</param>
+        /// <returns>The decimal read from the stream</returns>
+        public static decimal ReadPackedDecimalIbm(this BinaryReader reader, byte storageLength, byte scale)
+        {
+            if (ReferenceEquals(null, reader))
+                throw new ArgumentNullException("reader");
+            var bytes = ReadBytes(reader, storageLength);
+            return IbmConverter.ToUnpackedDecimal(bytes, scale);
+        }
 
         static byte[] ReadBytes(BinaryReader reader, int count)
         {

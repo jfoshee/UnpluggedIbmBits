@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace Unplugged.IbmBits
@@ -219,6 +221,99 @@ namespace Unplugged.IbmBits
             var exponent = moveRadix + _exponentBias;
             bytes[0] += (byte)exponent;
             return bytes;
+        }
+
+        #endregion
+
+        #region Packed Decimal
+
+        /// <summary>
+        /// Unpack the byte array into a decimal
+        /// </summary>
+        /// <remarks>
+        /// From the java version made by p4w3l located here : http://cobol2j.cvs.sourceforge.net/viewvc/cobol2j/cobol2j/src/main/java/net/sf/cobol2j/RecordSet.java?revision=1.25&view=markup from
+        /// the open source projet cobol2j at http://sourceforge.net/projects/cobol2j/ under LGPLV2
+        /// </remarks>
+        public static Decimal ToUnpackedDecimal(byte[] inputData, int scale)
+        {
+            var inputLength = inputData.Length;
+            var strbuf = new StringBuilder();
+            int tempData;
+            int tempData1;
+
+            for (int i = 0; i < inputData.Length; i++)
+            {
+                tempData = inputData[i];
+                tempData1 = tempData & 0xF0;
+                int tempData2 = tempData1 >> 4;
+                strbuf.Append(tempData2);
+
+                if (i < (inputLength - 1))
+                {
+                    tempData = inputData[i];
+                    tempData1 = tempData & 0x0F;
+                    strbuf.Append(tempData1);
+                }
+            }
+
+            if ((scale > 0 && strbuf.Length -scale>0))
+                strbuf.Insert(strbuf.Length - scale, '.');
+
+            var result = decimal.Parse(strbuf.ToString());
+
+            tempData = inputData[inputLength - 1];
+            tempData1 = tempData & 0x0F;
+
+            if ((tempData1 == 0x0F) || (tempData1 == 0x0C))
+                return result;
+
+            if (tempData1 == 0x0D)
+                return -result;
+
+            return result;
+        }
+
+        /// <summary>
+        /// Convert the decimal value into its packed value
+        /// </summary>
+        /// <param name="originalValue">The value to pack</param>
+        /// <returns>The packed value as a byte[]</returns>
+        /// <remarks>
+        /// James Howey Copyright (c) Microsoft Corporation.  All rights reserved. Microsoft Shared Source Permissive License
+        /// </remarks>
+        public static byte[] GetBytes(decimal originalValue)
+        {
+            var value = long.Parse(originalValue.ToString(CultureInfo.InvariantCulture).Replace(".", ""));
+            var comp3 = new Stack<byte>(10);
+
+            byte currentByte;
+            if (value < 0)
+            {
+                currentByte = 0x0d;
+                value = -value;
+            }
+            else
+                currentByte = 0x0c;
+
+            var byteComplete = false;
+            while (value != 0)
+            {
+                if (byteComplete)
+                    currentByte = (byte)(value % 10);
+                else
+                    currentByte |= (byte)((value % 10) << 4);
+
+                value /= 10;
+                byteComplete = !byteComplete;
+
+                if (byteComplete)
+                    comp3.Push(currentByte);
+            }
+
+            if (!byteComplete)
+                comp3.Push(currentByte);
+
+            return comp3.ToArray();
         }
 
         #endregion
