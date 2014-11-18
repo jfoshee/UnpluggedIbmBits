@@ -40,5 +40,14 @@ namespace Unplugged.IbmBits
             var bytes = IbmConverter.GetBytes(value);
             writer.Write(bytes);
         }
+
+        /// <summary>
+        /// Writes a packed decimal to the stream
+        /// </summary>
+        public static void WriteIbmPackedDecimal(this BinaryWriter writer, decimal value)
+        {
+            var bytes = IbmConverter.GetBytes(value);
+            writer.Write(bytes);
+        }
     }
 }

@@ -516,5 +516,29 @@ namespace Unplugged.IbmBits.Tests
 
         #endregion
         // TODO: Support for running on Big Endian architecture
+
+        #region ToDecimal
+
+        [TestMethod]
+        public void DecimalZeroShouldBeTheSame()
+        {
+            var expected = (decimal) 0;
+            var bytes = IbmConverter.GetBytes(expected);
+            var result = IbmConverter.ToUnpackedDecimal(bytes, 2);
+
+            result.Should().Be(expected);
+        }
+
+        [TestMethod]
+        public void DecimalShouldBeTheSame()
+        {
+            var expected = (decimal)123.45;
+            var bytes = IbmConverter.GetBytes(expected);
+            var result = IbmConverter.ToUnpackedDecimal(bytes, 2);
+
+            result.Should().Be(expected);
+        }
+
+        #endregion
     }
 }
