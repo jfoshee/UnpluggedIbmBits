@@ -1,6 +1,0 @@
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Target Name="Build">
-    <MSBuild Projects="Unplugged.IbmBits/Unplugged.IbmBits.csproj" />
-    <MSBuild Projects="Unplugged.IbmBits.Tests/Unplugged.IbmBits.Tests.csproj" />  
-  </Target>
-</Project>
