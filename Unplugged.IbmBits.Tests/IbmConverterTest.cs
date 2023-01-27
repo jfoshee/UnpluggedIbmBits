@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿#pragma warning disable IDE0230 // Use UTF-8 string literal
+using System.Collections;
 
 namespace Unplugged.IbmBits.Tests;
 
@@ -490,9 +491,9 @@ public class IbmConverterTest
         reverseValue.Should().BeInRange(value - epsilon, value + epsilon);
     }
 
-    float _wikipediaSingle = -118.625f;
+    readonly float _wikipediaSingle = -118.625f;
 
-    byte[] GetWikipediaSampleBytes()
+    static byte[] GetWikipediaSampleBytes()
     {
         // This test comes from the example described here: http://en.wikipedia.org/wiki/IBM_Floating_Point_Architecture#An_Example
         // The difference is the bits have to be reversed per byte because the highest order bit is on the right
