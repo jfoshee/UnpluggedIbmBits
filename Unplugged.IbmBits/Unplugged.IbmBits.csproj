@@ -2,10 +2,33 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>jfoshee</Authors>
+    <Description>Helps read/write and convert between legacy IBM System formats and .NET types. Includes IbmConverter class as well as BinaryReader &amp; BinaryWriter extensions for EBCDIC string, Big Endian Int16, Big Endian Int32 and IBM System/360 single precision floating point format.</Description>
+    <PackageProjectUrl>https://github.com/jfoshee/UnpluggedIbmBits</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/jfoshee/UnpluggedIbmBits.git</RepositoryUrl>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <PackageTags>ibm;ebcdic</PackageTags>
+    <PackageReleaseNotes>Target .NET Standard 2.0</PackageReleaseNotes>
+    <AssemblyVersion></AssemblyVersion>
+    <PackageLicenseFile>license.txt</PackageLicenseFile>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>symbols.nupkg</SymbolPackageFormat>
+    <Version>2.0.0.0</Version>
     <!-- <ImplicitUsings>enable</ImplicitUsings> -->
     <!-- <Nullable>enable</Nullable> -->
     <!-- <LangVersion>10.0</LangVersion> -->
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\license.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0" />
