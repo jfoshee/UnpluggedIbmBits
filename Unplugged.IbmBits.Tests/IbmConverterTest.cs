@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using FluentAssertions;
-using NUnit.Framework;
+﻿using System.Collections;
 
 namespace Unplugged.IbmBits.Tests
 {
@@ -16,7 +13,7 @@ namespace Unplugged.IbmBits.Tests
         const byte _l = 0x93;
         const byte _o = 0x96;
 
-        [Test]
+        [Fact]
         public void ShouldConvertFromEbcdicToUnicode()
         {
             // Arrange
@@ -29,7 +26,7 @@ namespace Unplugged.IbmBits.Tests
             result.Should().Be("Hello,");
         }
 
-        [Test]
+        [Fact]
         public void ShouldConvertFromEbcdicToUnicode2()
         {
             // Arrange
@@ -42,7 +39,7 @@ namespace Unplugged.IbmBits.Tests
             result.Should().Be("lol!");
         }
 
-        [Test]
+        [Fact]
         public void ShouldConvertToStringGivenStartingIndex()
         {
             // Arrange
@@ -56,7 +53,7 @@ namespace Unplugged.IbmBits.Tests
             result.Should().Be("He");
         }
 
-        [Test]
+        [Fact]
         public void ShouldConvertToStringGivenStartingIndex2()
         {
             // Arrange
@@ -70,7 +67,7 @@ namespace Unplugged.IbmBits.Tests
             result.Should().Be("ello");
         }
 
-        [Test]
+        [Fact]
         public void ShouldConvertToStringGivenIndexAndLength()
         {
             // Arrange
@@ -85,7 +82,7 @@ namespace Unplugged.IbmBits.Tests
             result.Should().Be("Hole");
         }
 
-        [Test]
+        [Fact]
         public void ShouldConvertToStringGivenIndexAndLength2()
         {
             // Arrange
@@ -100,29 +97,29 @@ namespace Unplugged.IbmBits.Tests
             result.Should().Be("HoHoHo");
         }
 
-        [Test, ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void ShouldThrowWhenArgumentNullForToStringGivenBytes()
         {
-            IbmConverter.ToString(null);
+            Assert.Throws<ArgumentNullException>(() => IbmConverter.ToString(null));
         }
 
-        [Test, ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void ShouldThrowWhenArgumentNullForToStringGivenBytesAndIndex()
         {
-            IbmConverter.ToString(null, 1);
+            Assert.Throws<ArgumentNullException>(() => IbmConverter.ToString(null, 1));
         }
 
-        [Test, ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void ShouldThrowWhenArgumentNullForToStringGivenBytesAndIndexAndLength()
         {
-            IbmConverter.ToString(null, 1, 1);
+            Assert.Throws<ArgumentNullException>(() => IbmConverter.ToString(null, 1, 1));
         }
 
         #endregion
 
         #region GetBytes from String
 
-        [Test]
+        [Fact]
         public void ShouldConvertFromUnicodeToEbcdic()
         {
             // Arrange
@@ -135,7 +132,7 @@ namespace Unplugged.IbmBits.Tests
             result.Should().Equal(new byte[] { _H, _e, _l, _l, _o, _comma });
         }
 
-        [Test]
+        [Fact]
         public void ShouldConvertFromStringGivenStartingIndex()
         {
             // Arrange
@@ -149,7 +146,7 @@ namespace Unplugged.IbmBits.Tests
             result.Should().Equal(new byte[] { _H, _e, _bang });
         }
 
-        [Test]
+        [Fact]
         public void ShouldConvertFromStringGivenStartingIndexAndLength()
         {
             // Arrange
@@ -164,17 +161,17 @@ namespace Unplugged.IbmBits.Tests
             result.Should().Equal(new byte[] { _o, _l, _e });
         }
 
-        [Test, ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void ShouldThrowWhenArgumentNullForGetBytesFromString()
         {
-            IbmConverter.GetBytes(null, 1, 1);
+            Assert.Throws<ArgumentNullException>(() => IbmConverter.GetBytes(null, 1, 1));
         }
 
         #endregion
 
         #region ToInt16()
 
-        [Test]
+        [Fact]
         public void ShouldConvertZeroInt16()
         {
             // Arrange
@@ -187,7 +184,7 @@ namespace Unplugged.IbmBits.Tests
             result.Should().Be(0);
         }
 
-        [Test]
+        [Fact]
         public void ShouldConvertNegativeInt16()
         {
             // Arrange
@@ -200,7 +197,7 @@ namespace Unplugged.IbmBits.Tests
             result.Should().Be(-21555);
         }
 
-        [Test]
+        [Fact]
         public void ShouldIgnoreTrailingBytesInt16()
         {
             // Arrange
@@ -213,7 +210,7 @@ namespace Unplugged.IbmBits.Tests
             result.Should().Be(1);
         }
 
-        [Test]
+        [Fact]
         public void ShouldConvertInt16WithStartIndex()
         {
             // Arrange
@@ -227,7 +224,7 @@ namespace Unplugged.IbmBits.Tests
             result.Should().Be(1);
         }
 
-        [Test]
+        [Fact]
         public void ShouldConvertAnotherInt16WithStartIndex()
         {
             // Arrange
@@ -241,23 +238,23 @@ namespace Unplugged.IbmBits.Tests
             result.Should().Be(512);
         }
 
-        [Test, ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void ShouldThrowWhenArgumentNullForToInt16()
         {
-            IbmConverter.ToInt16(null);
+            Assert.Throws<ArgumentNullException>(() => IbmConverter.ToInt16(null));
         }
 
-        [Test, ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void ShouldThrowWhenArgumentNullForToInt16WithStartIndex()
         {
-            IbmConverter.ToInt16(null, 1);
+            Assert.Throws<ArgumentNullException>(() => IbmConverter.ToInt16(null, 1));
         }
 
         #endregion
 
         #region GetBytes from Int16
 
-        [Test]
+        [Fact]
         public void ShouldConvertFromInt16()
         {
             // Arrange
@@ -274,7 +271,7 @@ namespace Unplugged.IbmBits.Tests
 
         #region ToInt32()
 
-        [Test]
+        [Fact]
         public void ShouldConvertZeroInt32()
         {
             // Arrange
@@ -287,7 +284,7 @@ namespace Unplugged.IbmBits.Tests
             result.Should().Be(0);
         }
 
-        [Test]
+        [Fact]
         public void ShouldConvertNegativeInt32()
         {
             // Arrange
@@ -300,7 +297,7 @@ namespace Unplugged.IbmBits.Tests
             result.Should().Be(-1985229329);
         }
 
-        [Test]
+        [Fact]
         public void ShouldIgnoreTrailingBytesInt32()
         {
             // Arrange
@@ -313,7 +310,7 @@ namespace Unplugged.IbmBits.Tests
             result.Should().Be(1);
         }
 
-        [Test]
+        [Fact]
         public void ShouldConvertInt32WithStartIndex()
         {
             // Arrange
@@ -327,7 +324,7 @@ namespace Unplugged.IbmBits.Tests
             result.Should().Be(1);
         }
 
-        [Test]
+        [Fact]
         public void ShouldConvertAnotherInt32WithStartIndex()
         {
             // Arrange
@@ -341,23 +338,23 @@ namespace Unplugged.IbmBits.Tests
             result.Should().Be(16909312);
         }
 
-        [Test, ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void ShouldThrowWhenArgumentNullForToInt32()
         {
-            IbmConverter.ToInt32(null);
+            Assert.Throws<ArgumentNullException>(() => IbmConverter.ToInt32(null));
         }
 
-        [Test, ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void ShouldThrowWhenArgumentNullForToInt32WithStartIndex()
         {
-            IbmConverter.ToInt32(null, 1);
+            Assert.Throws<ArgumentNullException>(() => IbmConverter.ToInt32(null, 1));
         }
 
         #endregion
 
         #region GetBytes from Int32
 
-        [Test]
+        [Fact]
         public void ShouldConvertFromInt32()
         {
             // Arrange
@@ -383,7 +380,7 @@ namespace Unplugged.IbmBits.Tests
             result.Should().BeInRange(expected - 0.0001f, expected + 0.0001f);
         }
 
-        [Test]
+        [Fact]
         public void ZeroShouldBeTheSame()
         {
             float expected = 0.0f;
@@ -391,7 +388,7 @@ namespace Unplugged.IbmBits.Tests
             VerifyToSingleReturns(expected, bytes);
         }
 
-        [Test]
+        [Fact]
         public void One()
         {
             var expected = 1f;
@@ -401,7 +398,7 @@ namespace Unplugged.IbmBits.Tests
             VerifyToSingleReturns(expected, bytes);
         }
 
-        [Test]
+        [Fact]
         public void NegativeOne()
         {
             var expected = -1f;
@@ -411,26 +408,26 @@ namespace Unplugged.IbmBits.Tests
             VerifyToSingleReturns(expected, bytes);
         }
 
-        [Test]
+        [Fact]
         public void SampleValueFromSegy()
         {
             var bytes = new byte[] { 0xc0, 0x1f, 0xf4, 0x62 };
             VerifyToSingleReturns(-0.1248f, bytes);
         }
 
-        [Test]
+        [Fact]
         public void SampleValueFromWikipediaToSingle()
         {
             VerifyToSingleReturns(_wikipediaSingle, GetWikipediaSampleBytes());
         }
 
-        [Test, ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void ShouldThrowWhenArgumentNullForToSingle()
         {
-            IbmConverter.ToSingle(null);
+            Assert.Throws<ArgumentNullException>(() => IbmConverter.ToSingle(null));
         }
 
-        [Test]
+        [Fact]
         public void VerifyFractionBytesCanBeConvertedToInt32()
         {
             var fractionBytes = new byte[] { 255, 255, 255, 0 };
@@ -443,37 +440,37 @@ namespace Unplugged.IbmBits.Tests
 
         #region GetBytes from Single
 
-        [Test]
+        [Fact]
         public void BytesFromZero()
         {
             VerifySingleConversion(0);
         }
 
-        [Test]
+        [Fact]
         public void BytesFromOne()
         {
             VerifySingleConversion(1f);
         }
 
-        [Test]
+        [Fact]
         public void BytesFromNegativeOne()
         {
             VerifySingleConversion(-1f);
         }
 
-        [Test]
+        [Fact]
         public void SampleValueToSegy()
         {
             VerifySingleConversion(-0.1248f);
         }
 
-        [Test]
+        [Fact]
         public void SampleValueFromWikipediaToBytes()
         {
             IbmConverter.GetBytes(_wikipediaSingle).Should().Equal(GetWikipediaSampleBytes());
         }
 
-        [Test]
+        [Fact]
         public void SingleConversionForRandomNumbers()
         {
             var random = new Random(51293);
@@ -518,7 +515,7 @@ namespace Unplugged.IbmBits.Tests
 
         #region ToDecimal
 
-        [Test]
+        [Fact]
         public void DecimalZeroShouldBeTheSame()
         {
             var expected = (decimal) 0;
@@ -528,7 +525,7 @@ namespace Unplugged.IbmBits.Tests
             result.Should().Be(expected);
         }
 
-        [Test]
+        [Fact]
         public void DecimalShouldBeTheSame()
         {
             var expected = (decimal)123.45;

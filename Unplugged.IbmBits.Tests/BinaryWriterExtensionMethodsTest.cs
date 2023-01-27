@@ -1,13 +1,8 @@
-﻿using System;
-using System.IO;
-using FluentAssertions;
-using NUnit.Framework;
-
-namespace Unplugged.IbmBits.Tests
+﻿namespace Unplugged.IbmBits.Tests
 {
     public class BinaryWriterExtensionMethodsTest
     {
-        [Test]
+        [Fact]
         public void WriteEbcdicShouldWriteConvertedBytes()
         {
             var value = "Nope";
@@ -15,7 +10,7 @@ namespace Unplugged.IbmBits.Tests
             VerifyBytesWritten(w => w.WriteEbcdic(value), expected);
         }
 
-        [Test]
+        [Fact]
         public void WriteInt16ShouldReverseBytes()
         {
             Int16 value = 100 + 7 * 256;
@@ -23,7 +18,7 @@ namespace Unplugged.IbmBits.Tests
             VerifyBytesWritten(w => w.WriteBigEndian(value), expected);
         }
 
-        [Test]
+        [Fact]
         public void WriteInt32ShouldReverseBytes()
         {
             Int32 value = 13 + (11 + (29 + 17 * 256) * 256) * 256;
@@ -31,7 +26,7 @@ namespace Unplugged.IbmBits.Tests
             VerifyBytesWritten(w => w.WriteBigEndian(value), expected);
         }
 
-        [Test]
+        [Fact]
         public void WriteSingleShouldConvertToIbmFormat()
         {
             Single value = 64.125488f;

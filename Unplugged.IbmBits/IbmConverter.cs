@@ -7,10 +7,24 @@ namespace Unplugged.IbmBits
 {
     public static class IbmConverter
     {
+        static IbmConverter()
+        {
+            // .NET Standard does not include the EBCDIC encoding by default.
+            // So it is necessary to reference System.Text.Encoding.CodePages
+            // and register CodePagesEncodingProvider
+            // "For code pages that otherwise are available only in the desktop .NET Framework"
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        }
+
         #region String
 
-        static readonly Encoding _unicode = Encoding.Unicode;
-        static readonly Encoding _ebcdic = Encoding.GetEncoding("IBM037");
+        static Encoding Unicode => Encoding.Unicode;
+
+        /// <summary>
+        /// IBM EBCDIC Encoding for US / Canada
+        /// <see href="https://en.wikipedia.org/wiki/Code_page_37"/>
+        /// </summary>
+        static Encoding Ebcdic => Encoding.GetEncoding("IBM037");
 
         /// <summary>
         /// Returns a Unicode string converted from a byte array of EBCDIC encoded characters
@@ -46,8 +60,8 @@ namespace Unplugged.IbmBits
         /// </param>
         public static string ToString(byte[] value, int startingIndex, int length)
         {
-            var unicodeBytes = Encoding.Convert(_ebcdic, _unicode, value, startingIndex, length);
-            return _unicode.GetString(unicodeBytes);
+            var unicodeBytes = Encoding.Convert(Ebcdic, Unicode, value, startingIndex, length);
+            return Unicode.GetString(unicodeBytes);
         }
         
         /// <summary>
@@ -84,8 +98,8 @@ namespace Unplugged.IbmBits
         {
             if (ReferenceEquals(null, value))
                 throw new ArgumentNullException("value");
-            var unicodeBytes = _unicode.GetBytes(value.ToCharArray(startingIndex, length));
-            return Encoding.Convert(_unicode, _ebcdic, unicodeBytes);
+            var unicodeBytes = Unicode.GetBytes(value.ToCharArray(startingIndex, length));
+            return Encoding.Convert(Unicode, Ebcdic, unicodeBytes);
         }
 
         #endregion
