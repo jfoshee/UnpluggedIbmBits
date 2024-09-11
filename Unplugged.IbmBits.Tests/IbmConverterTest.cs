@@ -1,5 +1,6 @@
 ﻿#pragma warning disable IDE0230 // Use UTF-8 string literal
 using System.Collections;
+using System.Globalization;
 
 namespace Unplugged.IbmBits.Tests;
 
@@ -536,5 +537,16 @@ public class IbmConverterTest
         result.Should().Be(expected);
     }
 
-    #endregion
+    [Fact]
+    public void DecimalShouldBeTheSameInNonInvariantCulture()
+    {
+        Thread.CurrentThread.CurrentCulture = new CultureInfo("lt-LT");
+	    var expected = (decimal)123.45;
+	    var bytes = IbmConverter.GetBytes(expected);
+	    var result = IbmConverter.ToUnpackedDecimal(bytes, 2);
+
+	    result.Should().Be(expected);
+    }
+
+	#endregion
 }
