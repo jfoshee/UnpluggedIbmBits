@@ -271,7 +271,7 @@ public static class IbmConverter
         if ((scale > 0 && strbuf.Length -scale>0))
             strbuf.Insert(strbuf.Length - scale, '.');
 
-        var result = decimal.Parse(strbuf.ToString());
+        var result = decimal.Parse(strbuf.ToString(), CultureInfo.InvariantCulture);
 
         tempData = inputData[inputLength - 1];
         tempData1 = tempData & 0x0F;
